@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { storage } from '../../core/storage'
 
 const STORAGE_KEY = 'panes'
+const NAVBAR_OFFSET = 80; // Add a constant for navbar offset
 
 let info = storage.get(STORAGE_KEY)
 
@@ -33,7 +34,7 @@ export function usePane(id, paneRef, headRef, resizable = false) {
     if (!config) {
       const count = ++info.count
       config = {
-        y: count * 20,
+        y: count * 20 + NAVBAR_OFFSET, // Add navbar offset to initial position
         x: count * 20,
         width: paneRef.current.offsetWidth,
         height: paneRef.current.offsetHeight,
@@ -55,8 +56,8 @@ export function usePane(id, paneRef, headRef, resizable = false) {
     const maxX = window.innerWidth - config.width
     const maxY = window.innerHeight - config.height
     config.x = Math.min(Math.max(0, config.x), maxX)
-    config.y = Math.min(Math.max(0, config.y), maxY)
-
+    config.y = Math.min(Math.max(NAVBAR_OFFSET, config.y), maxY) // Ensure minimum Y is navbar offset
+    
     pane.style.top = `${config.y}px`
     pane.style.left = `${config.x}px`
     if (resizable) {
@@ -81,6 +82,10 @@ export function usePane(id, paneRef, headRef, resizable = false) {
       if (!moving) return
       config.x += e.movementX
       config.y += e.movementY
+      
+      // Ensure pane doesn't go above navbar
+      config.y = Math.max(NAVBAR_OFFSET, config.y)
+      
       pane.style.top = `${config.y}px`
       pane.style.left = `${config.x}px`
       persist()

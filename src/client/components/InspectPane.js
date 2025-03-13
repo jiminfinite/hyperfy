@@ -98,10 +98,10 @@ export function AppPane({ world, app }) {
       className='apane'
       css={css`
         position: absolute;
-        top: 20px;
+        top: 70px;
         left: 20px;
         width: 320px;
-        max-height: calc(100vh - 40px);
+        max-height: calc(100vh - 90px);
         background: rgba(22, 22, 28, 1);
         border: 1px solid rgba(255, 255, 255, 0.03);
         border-radius: 10px;

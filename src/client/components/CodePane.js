@@ -74,7 +74,7 @@ export function CodePane({ entity, onClose }) {
       className='acode'
       css={css`
         position: absolute;
-        top: 40px;
+        top: 90px;
         left: 40px;
         width: 640px;
         height: 520px;
